@@ -21,7 +21,6 @@ module.exports = routes => {
         } catch(error){
             return res.status(500).send(error)
         }
-
     })
 
     routes.get('/jobs/', async (req, res) => {
@@ -39,28 +38,17 @@ module.exports = routes => {
         }
     })
 
-    routes.post('/jobs', [check('name').isLength({min:5}), check('salary')], (req, res) => {
+    routes.post('/jobs', [check('name').isLength({min:5}), check('salary')], async (req, res) => {
         if(!validationResult(req).isEmpty())
             return res.status(422).send('Invalid name')
         try{
-            let newJob = new jobModel.Job(
-                req.body.id,
-                req.body.name,
-                req.body.salary,
-                req.body.description,
-                req.body.skills,
-                req.body.area,
-                req.body.differentials,
-                req.body.isPcd,
-                req.body.isActive
-            )
+            await db.doc().set(req.body)
 
-            collectionJobs.push(newJob)
-
-            res.send(newJob)
+            return res.send('Job added sucessfully')
         }
-        catch(error)
-            { return res.status(500).send(error) }
+        catch(error){ 
+            return res.status(500).send(error) 
+        }
     })
 
     routes.put('/jobs/:id', async (req, res) => {
