@@ -40,3 +40,11 @@ extractUser = user => {
         password: v.password
     }
 }
+
+// git branch -v -a
+
+// gti branch -h
+
+// git checkout -t remotes/origin/models_and_routes
+
+// heroku login
