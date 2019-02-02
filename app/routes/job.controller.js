@@ -1,5 +1,6 @@
 const jobModel = require('../../models/job')
-const { check, validationResult } = require('express-validator/check')
+//const { check, validationResult } = require('express-validator/check')
+const validateToken = require('../../config/security/tokenValidator')
 
 let collectionJobs = []
 
@@ -23,7 +24,7 @@ module.exports = routes => {
         }
     })
 
-    routes.get('/jobs/', async (req, res) => {
+    routes.get('/jobs/', validateToken, async (req, res) => {
         try {
             let docs = await db.get()
             let jobs = []
@@ -38,9 +39,9 @@ module.exports = routes => {
         }
     })
 
-    routes.post('/jobs', [check('name').isLength({min:5}), check('salary')], async (req, res) => {
-        if(!validationResult(req).isEmpty())
-            return res.status(422).send('Invalid name')
+    routes.post('/jobs', /*[check('name').isLength({min:5}), check('salary')],*/ async (req, res) => {
+        // if(!validationResult(req).isEmpty())
+        //     return res.status(422).send('Invalid name')
         try{
             await db.doc().set(req.body)
 

@@ -10,8 +10,11 @@ const bodyParser = require('body-parser')
 
 const server = express()
 
+const cors = require('cors')
+
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
+server.use(cors());
 
 consign()
     .include('./config/firebaseConfig.js')
