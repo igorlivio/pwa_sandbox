@@ -24,7 +24,7 @@ module.exports = routes => {
         }
     })
 
-    routes.get('/jobs/', validateToken, async (req, res) => {
+    routes.get('/jobs/', /* validateToken, */ async (req, res) => {
         try {
             let docs = await db.get()
             let jobs = []
