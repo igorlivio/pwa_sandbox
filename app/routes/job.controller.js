@@ -43,9 +43,9 @@ module.exports = routes => {
         // if(!validationResult(req).isEmpty())
         //     return res.status(422).send('Invalid name')
         try{
-            await db.doc().set(req.body)
+            const result = await bd.add(req.body)
 
-            return res.send('Job added sucessfully')
+            return res.send(result.id)
         }
         catch(error){ 
             return res.status(500).send(error) 
